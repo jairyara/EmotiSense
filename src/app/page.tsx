@@ -72,8 +72,9 @@ export default function Page() {
     };
 
     const loadModels = async () => {
-        await faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights');
-        await faceapi.nets.faceExpressionNet.loadFromUri('https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights');
+        const modelUrl = '/models'; // Ruta a la carpeta donde guardaste los modelos
+        await faceapi.nets.tinyFaceDetector.loadFromUri(modelUrl);
+        await faceapi.nets.faceExpressionNet.loadFromUri(modelUrl);
     };
 
     const analyzeImage = async (imgData: string) => {
@@ -155,10 +156,10 @@ export default function Page() {
                                     {Object.entries(e)
                                         .sort(([, a], [, b]) => b - a)
                                         .map(([emotion, value]) => (
-                                            <p className='flex gap-3' key={emotion} style={{color:emotionColors[emotion]}}>
-                                                <p>{emotionImages[emotion]}</p>
+                                            <div className='flex gap-3' key={emotion} style={{color:emotionColors[emotion]}}>
+                                                <span>{emotionImages[emotion]}</span>
                                                 {emotionTranslations[emotion] || emotion}: {(value * 100).toFixed(2)}%
-                                            </p>
+                                            </div>
                                         ))}
                                 </div>
                             </div>
